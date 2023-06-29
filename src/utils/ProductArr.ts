@@ -11,23 +11,6 @@ export interface ProductItem {
   price: number;
 }
 
-// export const currencies: Currency[] = [
-//   {
-//     code: "USD",
-//     symbol: "$",
-//     coefficient: 1,
-//   },
-//   {
-//     code: "UAH",
-//     symbol: "₴",
-//     coefficient: 36,
-//   },
-//   {
-//     code: "EUR",
-//     symbol: "€",
-//     coefficient: 0.9,
-//   },
-// ];
 
 export const products: ProductItem[] = [
   { 
