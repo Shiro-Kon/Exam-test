@@ -10,8 +10,9 @@ interface Currency {
 
 const currencies: Currency[] = [
   { code: 'USD', symbol: '$', coefficient: 1 },
-  { code: 'UAH', symbol: '₴', coefficient:  27 },
+  { code: 'UAH', symbol: '₴', coefficient:  36 },
   { code: 'EUR', symbol: '€', coefficient:  0.9 },
+  { code: 'KRW', symbol: '₩', coefficient:  1319 },
 ];
 
 const App: React.FC = () => {
@@ -58,5 +59,6 @@ const getPriceWithCurrency = (price: number, currency: string): string => {
   }
   return `$${price.toFixed(2)}`;
 };
+
 
 export default App;
