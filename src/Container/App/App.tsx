@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.scss';
 import ProductList from '../../component/Product/ProductList';
 
@@ -10,24 +10,24 @@ interface Currency {
 
 const currencies: Currency[] = [
   { code: 'USD', symbol: '$', coefficient: 1 },
-  { code: 'UAH', symbol: '₴', coefficient: 27 },
-  { code: 'EUR', symbol: '€', coefficient: 0.9 },
+  { code: 'UAH', symbol: '₴', coefficient:  27 },
+  { code: 'EUR', symbol: '€', coefficient:  0.9 },
 ];
 
 const App: React.FC = () => {
   const [currency, setCurrency] = useState<string>('USD');
   const [total, setTotal] = useState<number>(0);
 
-  useEffect(() => {
-    setTotal(0); // Reset the total to 0 when currency changes
-  }, [currency]);
-
   const handleCurrencyChange = (newCurrency: string) => {
     setCurrency(newCurrency);
   };
 
   const handleBuyProduct = (price: number) => {
-    setTotal((prevTotal) => prevTotal + price); // Add the price to the total
+    const selectedCurrency = currencies.find((curr) => curr.code === currency);
+    if (selectedCurrency) {
+      const priceInSelectedCurrency = price / selectedCurrency.coefficient;
+      setTotal((prevTotal) => prevTotal + priceInSelectedCurrency);
+    }
   };
 
   return (
@@ -42,11 +42,7 @@ const App: React.FC = () => {
           ))}
         </div>
       </header>
-      <ProductList
-        currency={currency}
-        currencies={currencies}
-        onBuy={handleBuyProduct}
-      />
+      <ProductList currency={currency} currencies={currencies} onBuy={handleBuyProduct} />
       <div className="total">
         Total: {getPriceWithCurrency(total, currency)}
       </div>
@@ -57,9 +53,10 @@ const App: React.FC = () => {
 const getPriceWithCurrency = (price: number, currency: string): string => {
   const selectedCurrency = currencies.find((curr) => curr.code === currency);
   if (selectedCurrency) {
-    return `${selectedCurrency.symbol}${price}`;
+    const priceInSelectedCurrency = price * selectedCurrency.coefficient;
+    return `${selectedCurrency.symbol}${priceInSelectedCurrency.toFixed(2)}`;
   }
-  return `$${price}`;
+  return `$${price.toFixed(2)}`;
 };
 
 export default App;

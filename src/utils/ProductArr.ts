@@ -20,7 +20,7 @@ export const currencies: Currency[] = [
   {
     code: "UAH",
     symbol: "₴",
-    coefficient: 36.60,
+    coefficient: 36,
   },
   {
     code: "EUR",
